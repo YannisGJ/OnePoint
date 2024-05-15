@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .border-bottom-gradient {
+        position: relative;
+        &:before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0.3px; /* Ajustez la hauteur de la bordure ici */
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0.1) 30%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.1) 70%
+            );
+        }
+    }
+}
+
+/* styles.css */
+/*
+.article-middle::before,
+.article-middle::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100px; 
+    border-radius: 0.5rem;
+    background-color: rgb(255, 0, 0);
+}
+
+.article-middle::before {
+    left: -15%;
+}
+
+.article-middle::after {
+    right: -15%;
+}
+ */
