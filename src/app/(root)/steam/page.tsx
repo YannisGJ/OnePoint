@@ -14,7 +14,6 @@ const fetcher = (url: string): Promise<any> =>
 export default function SteamPage() {
     const steamId = "";
     const { data: gamesList, error } = useSWR(`/api/steam/${steamId}`, fetcher);
-    console.log(gamesList);
 
     if (error) return <div>Failed to load</div>;
     if (!gamesList) return <div>Loading...</div>;
@@ -57,7 +56,7 @@ export default function SteamPage() {
                         </div>
                     ))}
                 </div>
-                <section className="h-full w-11/12 z-20 flex flex-col pb-4">
+                {/* <section className="h-full w-11/12 z-20 flex flex-col pb-4">
                     <div className="flex-grow z-40">
                         <div className="grid grid-cols-3 gap-7">
                             {gamesList.map((game, index) => (
@@ -70,7 +69,7 @@ export default function SteamPage() {
                             ))}
                         </div>
                     </div>
-                </section>
+                </section> */}
             </div>
         </div>
     );

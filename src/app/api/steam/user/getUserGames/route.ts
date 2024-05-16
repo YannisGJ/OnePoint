@@ -9,9 +9,7 @@ export async function GET(req: NextRequest) {
     const games = await fetch(
         `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${process.env.STEAM_API_KEY}&steamid=${param}&format=json`
     );
+    const data = await games.json();
 
-    console.log(process.env.STEAM_API_KEY);
-    console.log(games);
-
-    return NextResponse.json({ games: games });
+    return NextResponse.json({ data });
 }

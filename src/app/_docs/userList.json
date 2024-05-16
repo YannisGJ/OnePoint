@@ -1,0 +1,121 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "pseudo": "TheMino-Of-The-World",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "TheMino",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "TheWorld",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 423,
+            "pseudo": "World",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "TheMinoWorld",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "Mino-Of--World",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "The",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "Of-The-World",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "Mino",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "rld",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "Th",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "Of",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        },
+        {
+            "id": 1,
+            "pseudo": "he",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "novice",
+            "niveau": 1,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        }
+    ]
+}

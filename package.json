@@ -10,8 +10,10 @@
     },
     "dependencies": {
         "@tailwindcss/forms": "^0.5.7",
+        "@types/lodash": "^4.17.3",
         "axios": "^1.6.8",
         "express": "^4.19.2",
+        "lodash": "^4.17.21",
         "next": "14.2.1",
         "next-video": "^1.0.0",
         "react": "^18",
