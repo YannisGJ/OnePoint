@@ -4,10 +4,15 @@ import Steamimg from "@/app/_images/Steamsplash.svg";
 import Star from "@/app/_images/star-stroke-rounded";
 import UserInfos from "@/app/_docs/users.json";
 import Link from "next/link";
+import axios from "axios";
+import useSWR from "swr";
 
-const userinf = UserInfos.users[0];
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function SteamPage() {
+    const steamId = "yourSteamId"; // Replace 'yourSteamId' with the actual steamId value
+    const { data, error } = useSWR(`/api/data?steamId=${steamId}`, fetcher);
+
     return (
         <div className="h-full w-full">
             <article className="fixed w-1/3 h-full top-0 skew-x-12 -translate-x-20 rounded-lg z-0">

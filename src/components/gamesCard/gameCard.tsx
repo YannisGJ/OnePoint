@@ -7,7 +7,6 @@ export default function GameCard({
     game_header_image,
     hours,
     game_shop_url,
-    date,
 }: GameCardProps) {
     return (
         <div
@@ -28,7 +27,7 @@ export default function GameCard({
                     </div>
                     <Separator className="rotate-90 self-center " />
                     <Link
-                        href={game_shop_url}
+                        href={"//"}
                         className="inline-flex group hover:w-fit overflow-hidden"
                     >
                         <div>
