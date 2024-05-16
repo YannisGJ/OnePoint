@@ -1,3 +1,4 @@
+"use client";
 import GameCard from "@/components/gamesCard/gameCard";
 import Image from "next/image";
 import Steamimg from "@/app/_images/Steamsplash.svg";
@@ -7,11 +8,16 @@ import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+const fetcher = (url: string): Promise<any> =>
+    fetch(url).then((res) => res.json());
 
 export default function SteamPage() {
-    const steamId = "yourSteamId"; // Replace 'yourSteamId' with the actual steamId value
-    const { data, error } = useSWR(`/api/data?steamId=${steamId}`, fetcher);
+    const steamId = "";
+    const { data: gamesList, error } = useSWR(`/api/steam/${steamId}`, fetcher);
+    console.log(gamesList);
+
+    if (error) return <div>Failed to load</div>;
+    if (!gamesList) return <div>Loading...</div>;
 
     return (
         <div className="h-full w-full">
@@ -54,7 +60,7 @@ export default function SteamPage() {
                 <section className="h-full w-11/12 z-20 flex flex-col pb-4">
                     <div className="flex-grow z-40">
                         <div className="grid grid-cols-3 gap-7">
-                            {userinf.user.games.map((game, index) => (
+                            {gamesList.map((game, index) => (
                                 <GameCard
                                     key={game.appid}
                                     hours={game.play_time}
