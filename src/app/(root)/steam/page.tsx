@@ -3,7 +3,7 @@ import GameCard from "@/components/gamesCard/gameCard";
 import Image from "next/image";
 import Steamimg from "@/app/_images/Steamsplash.svg";
 import Star from "@/app/_images/star-stroke-rounded";
-import UserInfos from "@/app/_docs/users.json";
+import UserInfos from "@/app/_docs/user.json";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";

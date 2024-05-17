@@ -1,0 +1,13 @@
+{
+    "user": [
+        {
+            "id": 1,
+            "pseudo": "UserTest",
+            "mot_de_passe": "password1",
+            "adresse_mail": "user1@example.com",
+            "rank": "RankTest",
+            "niveau": 90,
+            "profile_picture": "https://startefacts.com/k2/news/610/upload//upload/news/120617633760.jpg"
+        }
+    ]
+}

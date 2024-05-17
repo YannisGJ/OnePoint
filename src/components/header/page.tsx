@@ -4,6 +4,7 @@ import Logo from "./headercontents/logo";
 import Image from "next/image";
 import userimg from "@/app/_images/Chokbar.jpg";
 import UserList from "@/app/_docs/userList.json";
+import UserDetails from "@/app/_docs/user.json";
 import { useState } from "react";
 import useSWR from "swr";
 import { debounce } from "lodash";
@@ -19,56 +20,70 @@ export default function Header() {
     //     query ? `/api/user/findUser?user=${query}` : null,
     //     fetcher
     // );
-    const search = async (value) => {
-        UserList.users.map((user, index) => {
-            if (user.pseudo.includes(value)) {
-                console.log(user.id);
-            }
-        });
-    };
+    // const search = async (value) => {
+    //     UserList.users.map((user, index) => {
+    //         if (user.pseudo.includes(value)) {
+    //             console.log(user.id);
+    //         }
+    //     });
+    // };
 
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        //console.log(event.target.value);
-        debouncedSearch(event.target.value);
-        setQuery(event.target.value);
-    };
+    // const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     //console.log(event.target.value);
+    //     debouncedSearch(event.target.value);
+    //     setQuery(event.target.value);
+    // };
 
-    const debouncedSearch = debounce(search, 300);
+    // const debouncedSearch = debounce(search, 300);
 
     return (
         <section className="bg-stone-900 w-full h-20 flex items-center justify-between drop-shadow-md border-bottom-gradient">
-            <div className="ml-10">
+            <div className="w-1/6 h-full">
                 <Logo />
             </div>
 
-            <div className="">
+            <div className="w-1/6">
                 <input
                     className="rounded-full w-full h-10 bg-stone-800 text-white pl-4"
                     type="text"
                     placeholder="Search"
-                    value={query}
-                    onChange={handleSearch}
+                    // value={query}
+                    // onChange={handleSearch}
                 />
             </div>
-            <div className="flex mr-10">
-                <div className="font-bold">
-                    <p>SuleyLaMerdeALol</p>
+
+            {UserDetails.user.map((user, index) => (
+                <div className="flex w-1/6 h-full justify-evenly">
+                    <div className="flex-col w-1/2 text-white">
+                        <div className="font-bold h-1/3">
+                            <p>{user.pseudo}</p>
+                        </div>
+                        <div className="h-2/3">
+                            <div className="mb-1 text-base font-medium text-green-700 dark:text-green-500">
+                                {user.rank}
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-2.5 hover:h-4 dark:bg-gray-700 group">
+                                <div
+                                    className="bg-green-600 h-full rounded-full dark:bg-green-500"
+                                    style={{ width: `${user.niveau}%` }}
+                                >
+                                    <p className="text-xs opacity-0 group-hover:opacity-100 flex justify-center">
+                                        {user.niveau}%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={{ position: "relative", width: "100%" }}>
+                        <Image
+                            src={user.profile_picture}
+                            layout="fill"
+                            objectFit="contain"
+                            alt="Picture of the author"
+                        />
+                    </div>
                 </div>
-                <div className="flex justify-evenly">
-                    <p>Rank</p>
-                    <p>Level</p>
-                </div>
-                <Image
-                    className="rounded-full ml-4"
-                    src={userimg}
-                    width={50}
-                    height={50}
-                    alt="Picture of the author"
-                />
-            </div>
+            ))}
         </section>
     );
-}
-function setQuery(value: any) {
-    throw new Error("Function not implemented.");
 }
