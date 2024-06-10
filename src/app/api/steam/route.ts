@@ -12,4 +12,13 @@ export async function GET(req: NextRequest) {
     const data = await games.json();
 
     return NextResponse.json({ data });
+
+    // console.log(users);
+
+    // const games = await fetch(
+    //     `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_API_KEY}&steamid=${param}`
+    // );
+    // const data = await games.json();
+
+    // return NextResponse.json({ data });
 }

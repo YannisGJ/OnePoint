@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@prisma/client': ^5.15.0
   '@tailwindcss/forms': ^0.5.7
   '@types/lodash': ^4.17.3
   '@types/node': ^20
@@ -10,6 +11,8 @@ specifiers:
   axios: ^1.6.8
   express: ^4.19.2
   file-loader: ^6.2.0
+  install: ^0.13.0
+  local-storage: ^2.0.0
   lodash: ^4.17.21
   next: 14.2.1
   next-video: ^1.0.0
@@ -23,10 +26,13 @@ specifiers:
   xml2js: ^0.6.2
 
 dependencies:
+  '@prisma/client': 5.15.0
   '@tailwindcss/forms': 0.5.7_tailwindcss@3.4.3
   '@types/lodash': 4.17.4
   axios: 1.6.8
   express: 4.19.2
+  install: 0.13.0
+  local-storage: 2.0.0
   lodash: 4.17.21
   next: 14.2.1_biqbaboplfbrettd7655fr4n2y
   next-video: 1.0.0_3t4qbe5ubtqeacblk3kphbvrgy
@@ -1115,6 +1121,17 @@ packages:
     engines: {node: '>=14'}
     requiresBuild: true
     optional: true
+
+  /@prisma/client/5.15.0:
+    resolution: {integrity: sha512-wPTeTjbd2Q0abOeffN7zCDCbkp9C9cF+e9HPiI64lmpehyq2TepgXE+sY7FXr7Rhbb21prLMnhXX27/E11V09w==}
+    engines: {node: '>=16.13'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dev: false
 
   /@smithy/abort-controller/2.2.0:
     resolution: {integrity: sha512-wRlta7GuLWpTqtFfGo+nZyOO1vEvewdNR1R4rTxpC8XU6vG/NDyrFBhwLZsqg1NUoR1noVaXJPC/7ZK47QCySw==}
@@ -2668,6 +2685,11 @@ packages:
   /inherits/2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
 
+  /install/0.13.0:
+    resolution: {integrity: sha512-zDml/jzr2PKU9I8J/xyZBQn8rPCAY//UOYNmR01XwNwyfhEWObo2SWfSl1+0tm1u6PhxLwDnfsT/6jB7OUxqFA==}
+    engines: {node: '>= 0.10'}
+    dev: false
+
   /ipaddr.js/1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
@@ -2790,6 +2812,10 @@ packages:
       emojis-list: 3.0.0
       json5: 2.2.3
     dev: true
+
+  /local-storage/2.0.0:
+    resolution: {integrity: sha512-/0sRoeijw7yr/igbVVygDuq6dlYCmtsuTmmpnweVlVtl/s10pf5BCq8LWBxW/AMyFJ3MhMUuggMZiYlx6qr9tw==}
+    dev: false
 
   /locate-path/5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
