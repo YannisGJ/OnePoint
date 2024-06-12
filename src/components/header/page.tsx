@@ -3,15 +3,31 @@
 import Logo from "./headercontents/logo";
 import Image from "next/image";
 import UserDetails from "@/app/_docs/user.json";
-import { useState } from "react";
-import useSWR from "swr";
-
-// const fetcher = (url: string): Promise<any> =>
-//     fetch(url).then((res) => res.json());
+import { useState, useContext } from "react";
+import axios from "axios";
+import { AppContext } from "@/app/store/store";
 
 export default function Header() {
     let status = localStorage.getItem("isLogged");
     let [logged, setLogged] = useState(false);
+    let { setQueryEntry } = useContext(AppContext);
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const search = async (value: string) => {
+        if (value != "" && value != null && value != undefined) {
+            const response = await axios.get(
+                `/api/steam/getSteamUser/?st_user_nickname=${value}`
+            );
+            setQueryEntry(response.data);
+            console.log(response.data.result);
+        }
+    };
+
+    const handleSearchChange = (event) => {
+        search(event.target.value);
+        setSearchTerm(event.target.value);
+    };
 
     const login = () => {
         setLogged(true);
@@ -33,10 +49,9 @@ export default function Header() {
                     className="rounded-full w-full h-10 bg-stone-800 text-white pl-4"
                     type="text"
                     placeholder="Search"
-                    // value={query}
-                    // onChange={handleSearch}
+                    value={searchTerm}
+                    onChange={handleSearchChange}
                 />
-                {/* <div>name : {data}</div> */}
             </div>
             {status ? (
                 <div className="w-1/6 h-full">
