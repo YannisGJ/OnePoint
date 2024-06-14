@@ -2,8 +2,8 @@
 import { createContext, useMemo, useState } from "react";
 
 type queryContextType = {
-    queryEntry: Array<string>; // Specify the type argument for the Array generic type
-    setQueryEntry: (query: Array<string>) => void;
+    searchedUserId: string;
+    setSearchedUserId: (query: string) => void;
 };
 
 export const AppContext = createContext({} as queryContextType);
@@ -11,11 +11,11 @@ export const AppContext = createContext({} as queryContextType);
 export default function AppWrapper({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const [queryEntry, setQueryEntry] = useState<Array<string>>([]); // Update the type of queryEntry to be an array of strings
+    const [searchedUserId, setSearchedUserId] = useState("");
 
     const contextValue = useMemo(
-        () => ({ queryEntry, setQueryEntry }),
-        [queryEntry, setQueryEntry]
+        () => ({ searchedUserId, setSearchedUserId }),
+        [searchedUserId, setSearchedUserId]
     );
 
     return (

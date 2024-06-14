@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// schema.prisma
 
 generator client {
   provider = "prisma-client-js"
@@ -20,4 +16,24 @@ model SteamUser {
   avatar         String
   profileurl     String
   loccountrycode String
+  Games       UserGames[]
+}
+
+model Game {
+  id            Int         @id @default(autoincrement())
+  name          String
+  steamId       String
+  headerImage   String
+  steamRating   String
+  steamShopUrl  String
+  Games   UserGames[]
+}
+
+
+model UserGames {
+  userId  Int
+  gameId       Int
+  user    SteamUser @relation(fields: [userId], references: [id])
+  game         Game      @relation(fields: [gameId], references: [id])
+  @@id([userId, gameId])
 }

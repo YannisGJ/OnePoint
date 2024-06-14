@@ -6,7 +6,6 @@ import prisma from "@/app/_docs/lib/prisma";
 export async function GET(req: NextRequest, res: NextResponse) {
     const { searchParams } = new URL(req.url);
     const param = searchParams.get("st_user_id");
-    console.log(param);
     const dbuser = await prisma.steamUser.findMany({
         where: {
             steamId: param,
@@ -16,7 +15,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
         const wbuser = await fetch(
             `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_API_KEY}&steamids=${param}`
         );
-        console.log(`${process.env.STEAM_API_KEY}`);
         const userData = await wbuser.json();
         if (userData.response.players.length !== 0) {
             await prisma.steamUser.create({

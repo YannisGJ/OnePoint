@@ -6,15 +6,12 @@ import prisma from "@/app/_docs/lib/prisma";
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
-        const param = searchParams.get("st_user_nickname");
+        const param: number = parseInt(searchParams.get("user_id") || "0");
         console.log(param);
 
         const result = await prisma.steamUser.findMany({
             where: {
-                name: {
-                    contains: param,
-                    mode: "insensitive",
-                },
+                id: param,
             },
         });
         console.log(result);

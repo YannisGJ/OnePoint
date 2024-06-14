@@ -1,26 +1,37 @@
 "use client";
 
-import Logo from "./headercontents/logo";
+import Logo from "./headercontents/logo/logo";
 import Image from "next/image";
-import UserDetails from "@/app/_docs/user.json";
-import { useState, useContext } from "react";
+import { useState, useContext, MouseEventHandler, useEffect } from "react";
 import axios from "axios";
 import { AppContext } from "@/app/store/store";
+import Auth from "./headercontents/login/login";
 
 export default function Header() {
-    let status = localStorage.getItem("isLogged");
-    let [logged, setLogged] = useState(false);
-    let { setQueryEntry } = useContext(AppContext);
+    type user = {
+        id: number;
+        name: string;
+        rank: string;
+        niveau: number;
+        avatar: string;
+    };
+
+    let { setSearchedUserId } = useContext(AppContext);
+
+    const [result, setResult] = useState<Array<user>>();
 
     const [searchTerm, setSearchTerm] = useState("");
+    const [showDropdown, setShowDropdown] = useState(false);
 
     const search = async (value: string) => {
         if (value != "" && value != null && value != undefined) {
             const response = await axios.get(
-                `/api/steam/getSteamUser/?st_user_nickname=${value}`
+                `/api/steam/getSteamUserByName/?st_user_nickname=${value}`
             );
-            setQueryEntry(response.data);
-            console.log(response.data.result);
+            setResult(response.data.result);
+            setShowDropdown(true);
+        } else {
+            setShowDropdown(false);
         }
     };
 
@@ -29,20 +40,34 @@ export default function Header() {
         setSearchTerm(event.target.value);
     };
 
-    const login = () => {
-        setLogged(true);
-        localStorage.setItem("isLogged", logged.toString());
+    const loadUserPage: MouseEventHandler<HTMLDivElement> = (event) => {
+        setSearchedUserId(event.currentTarget.dataset.userId as string);
     };
 
-    const logout = () => {
-        setLogged(false);
-        localStorage.removeItem("isLogged");
+    const handleClickOutside = (event) => {
+        if (
+            !event.target.closest(".search-dropdown") &&
+            !event.target.closest(".search-input")
+        ) {
+            setShowDropdown(false);
+        }
     };
+
+    useEffect(() => {
+        if (showDropdown) {
+            document.addEventListener("click", handleClickOutside);
+        } else {
+            document.removeEventListener("click", handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [showDropdown]);
 
     return (
         <section className="bg-stone-900 w-full h-20 flex items-center justify-between drop-shadow-md border-bottom-gradient">
             <div className="w-1/6 h-full content-center">
-                <Logo onClick={logout} />
+                <Logo />
             </div>
             <div className="flex w-2/6">
                 <input
@@ -53,65 +78,46 @@ export default function Header() {
                     onChange={handleSearchChange}
                 />
             </div>
-            {status ? (
-                <div className="w-1/6 h-full">
-                    {UserDetails.user.map((user, index) => (
+            {showDropdown && result != null && (
+                <div className="w-1/2 h-fit bg-stone-800 absolute top-full left-1/4 mt-5 rounded-lg">
+                    {result?.map((user, index) => (
                         <div
-                            className="flex w-full h-full justify-evenly"
                             key={user.id}
+                            className=" p-2 w-full h-full justify-center text-white"
                         >
-                            <div className="flex-col w-1/2 text-white">
-                                <div className="font-bold h-1/3">
-                                    <p>{user.pseudo}</p>
+                            <div
+                                className="flex hover:bg-stone-700 hover:cursor-pointer rounded-lg"
+                                onClick={loadUserPage}
+                                role="button"
+                                tabIndex={0}
+                                data-user-id={user.id}
+                            >
+                                <div className="justify-center">
+                                    {/* <Image
+                                        src={user.avatar}
+                                        layout="fill"
+                                        objectFit="contain"
+                                        alt="Picture of the author"
+                                    ></Image> */}
                                 </div>
-                                <div className="h-2/3">
-                                    <div className="mb-1 text-base font-medium text-green-700 dark:text-green-500">
-                                        <p>{user.rank}</p>
-                                    </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2.5 hover:h-4 dark:bg-gray-700 group">
-                                        <div
-                                            className="bg-green-600 h-full rounded-full dark:bg-green-500"
-                                            style={{ width: `${user.niveau}%` }}
-                                        >
-                                            <p className="text-xs opacity-0 group-hover:opacity-100 flex justify-center">
-                                                {user.niveau}%
-                                            </p>
+                                <div className="flex h-full w-2/3 justify-center">
+                                    <div className="flex flex-col">
+                                        <div className="font-bold">
+                                            {user.name}
+                                        </div>
+                                        <div className="flex">
+                                            <div>{user.rank}</div>
+                                            <div>Nv : {user.niveau}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                style={{ position: "relative", width: "100%" }}
-                            >
-                                <Image
-                                    src={user.profile_picture}
-                                    layout="fill"
-                                    objectFit="contain"
-                                    alt="Picture of the author"
-                                />
-                            </div>
+                            <hr className="my-4 border-t-2 bg-stone-700 opacity-10 rounded-full"></hr>
                         </div>
                     ))}
                 </div>
-            ) : (
-                <div className="w-1/6 h-full">
-                    <div className="flex w-full h-full justify-evenly">
-                        <div className="content-center">
-                            <button
-                                className="bg-green-600 rounded-full h-10 w-20 text-white hover:bg-green-700 hover:drop-shadow-lg"
-                                onClick={login}
-                            >
-                                Sign in
-                            </button>
-                        </div>
-                        <div className="content-center">
-                            <button className="bg-blue-600 rounded-full h-10 w-20 text-white hover:bg-blue-700 hover:drop-shadow-lg">
-                                Sign up
-                            </button>
-                        </div>
-                    </div>
-                </div>
             )}
+            <Auth />
         </section>
     );
 }

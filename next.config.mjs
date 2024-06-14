@@ -1,7 +1,9 @@
+import { hostname } from "os";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ["startefacts.com"],
+        domains: ["startefacts.com", "avatars.steamstatic.com"],
     },
     remotePatterns: [
         {
@@ -9,6 +11,12 @@ const nextConfig = {
             hostname: "startefacts.com",
             port: "",
             pathname: "/k2/**",
+        },
+        {
+            protocol: "https",
+            hostname: "avatars.steamstatic.com",
+            port: "",
+            pathname: "/**",
         },
     ],
 };
