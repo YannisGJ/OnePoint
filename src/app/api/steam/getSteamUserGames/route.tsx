@@ -6,101 +6,134 @@ import prisma from "@/app/_docs/lib/prisma";
 export async function GET(req: NextRequest) {
     type user = {
         id: number;
-        steamId: string;
+        userid: string;
     };
 
-    type st_game = {
-        appid: number;
-        steamId: string;
-        headerImage: string;
-        steamRating: string;
-        steamShopUrl: string;
+    type st_user_game = {
+        userid: string;
+        appid: string;
     };
 
     try {
         const { searchParams } = new URL(req.url);
-        const param = parseInt(searchParams.get("user_id") || "0");
+        const param = searchParams.get("st_user_id");
         console.log(param);
+        let game_index = 0;
 
-        const userResult = await prisma.steamUser.findMany({
+        console.log("1");
+        const userResult = await prisma.SteamUser.findMany({
             where: {
-                id: param,
+                userid: param,
             },
         });
+        console.log("2");
 
         console.log(userResult);
         if (userResult.length != 0) {
             userResult.map(async (user: user) => {
+                console.log(user.id);
                 const userGamesResult = await prisma.UserGames.findMany({
-                    where: { userId: user?.id },
+                    where: {
+                        userid: user.id,
+                    },
                 });
+                console.log(userGamesResult);
+                console.log("2");
                 //console.log("userGamesResult" + userGamesResult);
                 if (userGamesResult.length == 0) {
                     let user_st_id;
+                    console.log("2");
                     userResult.map((user: user) => {
-                        console.log(user.steamId);
-                        user_st_id = user.steamId;
+                        console.log(user.userid);
+                        user_st_id = user.userid;
                     });
-                    const st_fetchedGames = await fetch(
+                    const st_user_fetchedGames = await fetch(
                         `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${user_st_id}&format=json&include_played_free_games=1`
                     );
-                    if (st_fetchedGames.status !== 200) {
+                    if (st_user_fetchedGames.status !== 200) {
                         return NextResponse.error();
                     } else {
-                        const st_games = await st_fetchedGames.json();
-                        const ar_st_games = st_games.response.games;
-                        let ar_games: Array<st_game> = [];
-                        ar_st_games.map(async (_game: st_game) => {
-                            console.log(_game.appid);
+                        const st_user_games = await st_user_fetchedGames.json();
+                        const ar_st_games = st_user_games.response.games;
+                        console.log(ar_st_games);
+                        let ar_games: Array<st_user_game> = [];
+                        ar_st_games.map(async (user_game: st_user_game) => {
+                            console.log(user_game.appid);
                             ar_games.push({
-                                appid: _game.appid,
-                                steamId: "",
-                                headerImage: "",
-                                steamRating: "5",
-                                steamShopUrl: "",
+                                userid: user.id.toString(),
+                                appid: user_game.appid.toString(),
                             });
+                            console.log("3");
+                            console.log(user_game.appid);
                             if (
                                 (
                                     await prisma.Game.findMany({
-                                        where: { id: _game.appid },
+                                        where: {
+                                            appid: user_game.appid.toString(),
+                                        },
                                     })
                                 ).length == 0
                             ) {
+                                console.log("3");
+                                console.log(user_game.appid);
                                 await prisma.Game.create({
                                     data: {
-                                        id: _game.appid,
-                                        steamId: "",
+                                        appid: user_game.appid.toString(),
                                         name: "",
+                                        type: "",
                                         headerImage: "",
-                                        steamRating: "5",
                                         steamShopUrl: "",
                                     },
                                 });
+                                console.log("3");
                             }
+                            console.log("3");
+                            getGamesDetails(user_game.appid);
                         });
                         await Promise.all(
-                            ar_games.map((game: st_game) => {
+                            ar_games.map((game: st_user_game) => {
                                 return prisma.UserGames.create({
                                     data: {
-                                        userId: user.id,
-                                        gameId: game.appid,
+                                        userid: user.id,
+                                        appid: game.appid,
                                     },
                                 });
                             })
                         );
+                        console.log("3");
                     }
                 }
             });
         }
-        const getGamesDetail = async (st_game_id: number) => {
-            const gameDetails = await fetch(
-                `https://store.steampowered.com/api/appdetails?appids=${st_game_id}`
-            );
-            console.log(gameDetails);
+        const getGamesDetails = async (st_game_appid: string) => {
+            if (game_index < 6) {
+                console.log("3");
+                const game_details_response = await fetch(
+                    `http://localhost:3000/api/steam/getGamesDetails?st_game_id=${st_game_appid}`
+                );
+                console.log("3");
+                const game_details = await game_details_response.json();
+                game_index++;
+
+                prisma.Game.update({
+                    where: { appid: st_game_appid },
+                    data: {
+                        name: game_details[st_game_appid].data.name,
+                        type: game_details[st_game_appid].data.type,
+                        headerImage:
+                            game_details[st_game_appid].data.header_image,
+                        steamShopUrl: `https://store.steampowered.com/app/${st_game_appid}/`,
+                    },
+                });
+                console.log(game_details[st_game_appid].data.name);
+            } else {
+                game_index++;
+            }
         };
 
         return NextResponse.json("ok");
-    } catch {
+    } catch (error) {
+        console.error(error);
         return NextResponse.error();
     }
 }

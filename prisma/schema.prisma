@@ -12,7 +12,7 @@ datasource db {
 model SteamUser {
   id             Int      @id @default(autoincrement())
   name           String
-  steamId        String
+  userid        String
   avatar         String
   profileurl     String
   loccountrycode String
@@ -21,19 +21,19 @@ model SteamUser {
 
 model Game {
   id            Int         @id @default(autoincrement())
+  appid       String
   name          String
-  steamId       String
+  type          String
   headerImage   String
-  steamRating   String
   steamShopUrl  String
   Games   UserGames[]
 }
 
 
 model UserGames {
-  userId  Int
-  gameId       Int
-  user    SteamUser @relation(fields: [userId], references: [id])
-  game         Game      @relation(fields: [gameId], references: [id])
-  @@id([userId, gameId])
+  userid  Int
+  appid       Int
+  user    SteamUser @relation(fields: [userid], references: [id])
+  game         Game      @relation(fields: [appid], references: [id])
+  @@id([userid, appid])
 }

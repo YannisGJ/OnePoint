@@ -5,10 +5,10 @@ import prisma from "@/app/_docs/lib/prisma";
 
 export async function GET(req: NextRequest, res: NextResponse) {
     const { searchParams } = new URL(req.url);
-    const param = searchParams.get("st_user_id");
-    const dbuser = await prisma.steamUser.findMany({
+    const param = searchParams.get("user_id");
+    const dbuser = await prisma.SteamUser.findMany({
         where: {
-            steamId: param,
+            userid: param,
         },
     });
     if (dbuser.length === 0) {
@@ -17,10 +17,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
         );
         const userData = await wbuser.json();
         if (userData.response.players.length !== 0) {
+            console.log(userData.response.players[0]);
             await prisma.steamUser.create({
                 data: {
                     name: userData.response.players[0].personaname,
-                    steamId: userData.response.players[0].steamid,
+                    userid: userData.response.players[0].steamid,
                     avatar: userData.response.players[0].avatarfull,
                     profileurl: userData.response.players[0].profileurl,
                     loccountrycode: userData.response.players[0].loccountrycode,
